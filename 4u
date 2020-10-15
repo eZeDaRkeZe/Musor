@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
+
+using namespace std;
+
+struct car
+{
+	double price;
+	int id;
+	char mark[256];
+};
+
+struct client
+{
+	char pasport[12];
+	double number;
+	char* name;
+};
+
+struct rent
+{
+	car* Car;
+	client* Client;
+	int day, month, year;
+	int time;
+};
+
+int input_car(car &a)
+{
+	char bufer[256];
+	cout << "Введите данные машины: " << endl;
+	cout << "Цена: ";
+	cin >> a.price;
+	cout << "ID машины: ";
+	cin >> a.id;
+	cout << "Марка машины: ";
+	cin >> bufer;
+	strcpy_s(a.mark, 256, bufer);
+	return 1;
+}
+
+int input_client(client &a)
+{
+	char bufer[256];
+	cout << "Введите данные клиента: " << endl;
+	cout << "Введите паспортные данные клиента: ";
+	cin >> a.pasport;
+	cout << "Введите номер телефона клиента: ";
+	cin >> a.number;
+	cout << "Введите имя клиента: ";
+	cin >> bufer;
+	a.name = new char[sizeof(bufer)];
+	strcpy_s(a.name, 256, bufer);
+	return 1;
+}
+
+int input_rent(rent& a, car c, client b)
+{
+	char bufer[256];
+	cout << "Введите данные аренды: " << endl;
+	a.Client = &b;
+	a.Car = &c;
+	cout << "День аренды: ";
+	cin >> a.day;
+	cout << "Месяц аренды: ";
+	cin >> a.month;
+	cout << "Год аренды: ";
+	cin >> a.year;
+	cout << "Продолжительность аренды(в часах): ";
+	cin >> a.time;
+	return 1;
+}
+
+void output_car(car& a)
+{
+	cout << endl << "Цена машины: ";
+	cout << a.price;
+	cout << endl << "ID машины: ";
+	cout << a.id;
+	cout << endl << "Марка машины: ";
+	cout << a.mark;
+}
+
+void output_client(client& a)
+{
+	cout << endl << "Паспортные данные клиента: ";
+	cout << a.pasport;
+	cout << endl << "Номер телефона клиента:";
+	cout << a.number;
+	cout << endl << "Имя клиента: ";
+	cout << a.name;
+}
+
+void output_rent(rent& a, car c, client b)
+{
+	output_car(c);
+	output_client(b);
+	
+	cout << endl << "День аренды: ";
+	cout << a.day;
+	cout << endl << "Месяц аренды: ";
+	cout << a.month;
+	cout << endl << "Год аренды: ";
+	cout << a.year;
+	cout << endl << "Продолжительность аренды в часах: ";
+	cout << a.time;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "");
+
+	car c1;
+	client cl1;
+	rent r1;
+
+	input_car(c1);
+	input_client(cl1);
+	input_rent(r1, c1, cl1);
+
+	output_car(c1);
+	output_client(cl1);
+	output_rent(r1,c1,cl1);
+
+
+	getchar();
+	getchar();
+	return 1;
+}
